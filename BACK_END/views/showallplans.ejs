@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%-include('./partials/header.ejs') %>
+  </head>
+  <%-include('./partials/navbar.ejs') %>
+  <body class=" ">
+    <div class="container-fluid mt-4 p-1 bg-primary rounded-3"></div>
+
+    <div class="row justify-content-md-center">
+      <div class="col-5"><%-include('./partials/createupdateform.ejs') %></div>
+
+      <div class="col-7 border rounded-3 shadow">
+        <div class="table-responsive">
+          <h3 class="bg-info mt-2 rounded-3">Plans Summary</h3>
+          <hr />
+          <table
+            class="table table-bordered align-middle table-striped shadow"
+            id="program-table"
+          >
+            <thead class="align-middle">
+              <tr>
+                <th><%= keys[2] %></th>
+                <!-- ID -->
+                <th><%= keys[1] %></th>
+                <!-- Plan Name -->
+                <th><%= keys[12] %></th>
+                <!-- Created At -->
+                <th><%= keys[13] %></th>
+                <!-- Updated At -->
+                <th>Days Since Last Update</th>
+                <!-- Days Difference -->
+                <th>Options</th>
+                <!-- Options -->
+              </tr>
+            </thead>
+            <tbody class="table-bordered"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <%-include('./partials/modal.ejs') %>
+
+    <script src="../javascripts/common.js"></script>
+
+    <script src="../javascripts/formhandlers.js"></script>
+  </body>
+</html>

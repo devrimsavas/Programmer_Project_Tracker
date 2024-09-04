@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/header.ejs') %>
+    <!-- Bootstrap CSS -->
+    <style>
+      /* Additional custom styles */
+      .content-center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80vh; /* Center content vertically */
+        text-align: center;
+      }
+      .joke-container {
+        background-color: #f8f9fa;
+        border: 1px solid #e0e0e0;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('./partials/navbar.ejs') %>
+
+    <div class="container-fluid mt-5">
+      
+      <h2 class="text-center"> Hello <span class="text-primary font-larger"><%=user.name %></span> New Empty Page for Further Development</h2>
+      
+    </div>
+
+    <!-- Centered content area for the joke -->
+    <div class="container content-center">
+      <div class="joke-container">
+        <h3 class="text" id="ipsum-place">Loading a joke...</h3>
+      </div>
+    </div>
+
+    <!-- jQuery and JavaScript code -->
+    <script>
+      $(document).ready(function() {
+        const getIpsum = async () => {
+          try {
+            const response = await fetch('https://official-joke-api.appspot.com/random_joke');
+            const data = await response.json();
+            console.log(data);
+            let joke = `${data.type}:<br>${data.setup}<br>${data.punchline}`;
+            $('#ipsum-place').html(joke);
+          } catch (error) {
+            console.error("error", error);
+            $('#ipsum-place').html("Failed to load a joke. Please try again later.");
+          }
+        };
+
+        getIpsum();
+      });
+    </script>
+  </body>
+</html>

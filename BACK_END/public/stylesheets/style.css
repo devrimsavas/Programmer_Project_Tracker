@@ -1,0 +1,65 @@
+body {
+  padding: 0;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding-top: 60px; /* Adjust padding-top to accommodate the fixed navbar */
+}
+
+a {
+  color: #00b7ff;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #ff9900; /* Change color on hover for better visual feedback */
+}
+
+#program-list:hover {
+  cursor: pointer;
+}
+
+.bg-with-bg-photo {
+  background-image: url("../images/planner-background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Fixes the background image */
+  height: 100vh; /* Ensures the background covers the full viewport */
+  display: flex;
+  align-items: center; /* Centers content vertically */
+  justify-content: center; /* Centers content horizontally */
+}
+
+.card {
+  border-radius: 15px; /* Adds rounded corners to the card */
+  overflow: hidden; /* Ensures content doesn't overflow the rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow for depth */
+}
+
+.card-header {
+  border-bottom: none;
+  text-align: center;
+}
+
+.card-body {
+  background-color: #ffffff;
+  padding: 2rem;
+}
+
+.text-white {
+  color: #ffffff !important;
+}
+
+.btn-warning {
+  border-radius: 30px; /* Adds rounded corners to the button */
+  font-size: 1.1rem; /* Increases the font size of the button text */
+}
+
+.btn-link {
+  font-size: 1rem;
+}
+
+hr.my-4 {
+  border-color: #ffffff;
+  width: 50%;
+  margin: auto;
+}

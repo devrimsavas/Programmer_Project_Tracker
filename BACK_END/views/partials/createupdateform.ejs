@@ -1,0 +1,237 @@
+<div class="container-fluid border rounded-3 shadow" id="new-plan-form">
+  <h3 class="bg-info mt-2 text-black rounded-3" id="new-plan-form-title">
+    Create New Plan
+  </h3>
+
+  <form id="newPlanForm" class="needs-validation" novalidate>
+    <!-- Plan Name -->
+    <div class="mb-3">
+      <label for="planName" class="form-label">
+        <!--Dynamic Title create or update --></label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="planName"
+        name="planName"
+        required
+      />
+      <div class="invalid-feedback">Please provide a plan name.</div>
+    </div>
+
+    <!-- Used Languages -->
+    <div class="mb-3">
+      <label for="usedLanguages" class="form-label"
+        >Used Languages (comma-separated)</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="usedLanguages"
+        name="usedLanguages"
+      />
+    </div>
+
+    <!-- Local Location -->
+    <div class="mb-3">
+      <label for="localLocation" class="form-label">Local Location</label>
+      <input
+        type="text"
+        class="form-control"
+        id="localLocation"
+        name="localLocation"
+      />
+    </div>
+
+    <!-- GitHub Link -->
+    <div class="mb-3">
+      <label for="githubLink" class="form-label">GitHub Link</label>
+      <input
+        type="url"
+        class="form-control"
+        id="githubLink"
+        name="githubLink"
+      />
+    </div>
+
+    <!-- Program Notes -->
+    <div class="mb-3">
+      <label for="programNotes" class="form-label">Program Notes</label>
+      <textarea
+        class="form-control"
+        id="programNotes"
+        name="programNotes"
+        rows="3"
+      ></textarea>
+    </div>
+
+    <!-- Tips & Tricks -->
+    <div class="mb-3">
+      <label for="tipsTricks" class="form-label">Tips & Tricks</label>
+      <textarea
+        class="form-control"
+        id="tipsTricks"
+        name="tipsTricks"
+        rows="3"
+      ></textarea>
+    </div>
+
+    <!-- What is Done -->
+    <div class="mb-3">
+      <label for="whatDone" class="form-label">What is Done</label>
+      <textarea
+        class="form-control"
+        id="whatDone"
+        name="whatDone"
+        rows="3"
+      ></textarea>
+    </div>
+
+    <!-- What to Do -->
+    <div class="mb-3">
+      <label for="whatToDo" class="form-label">What to Do</label>
+      <textarea
+        class="form-control"
+        id="whatToDo"
+        name="whatToDo"
+        rows="3"
+      ></textarea>
+    </div>
+
+    <!-- Author -->
+    <div class="mb-3">
+      <label for="author" class="form-label">Author (User ID)</label>
+      <input
+        type="text"
+        class="form-control"
+        id="author"
+        name="author"
+        required
+      />
+      <div class="invalid-feedback">Please provide an author ID.</div>
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="button"
+      class="btn btn-primary mb-4 shadow"
+      id="create-new-plan-button"
+    >
+      Create Plan
+    </button>
+    <button
+      type="button"
+      class="btn btn-warning mb-4 disabled"
+      id="update-plan-button"
+    >
+      Update Plan
+    </button>
+    <button type="button" class="btn btn-danger mb-4" id="clear-form-button">
+      Clean Form
+    </button>
+  </form>
+</div>
+
+<script>
+  $(document).ready(function () {
+    const BASE_URL = window.location.origin;
+    console.log("Your BASE_URL is : ", BASE_URL);
+
+    // Function to calculate the difference in days between two dates
+    function calculateDaysDifference(createdAt, updatedAt) {
+      if (!updatedAt) {
+        return "No update";
+      }
+      const updatedDate = new Date(updatedAt);
+      const today = new Date();
+      const timeDiff = Math.abs(today - updatedDate);
+      const dayDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+      return `${dayDiff} days ago`;
+    }
+
+    $("#create-new-plan-button").on("click", function (e) {
+      e.preventDefault();
+      console.log("Pressed create button and form intercepted");
+
+      // Gather form data
+      const planData = {
+        planName: $("#planName").val(),
+        usedLanguages: $("#usedLanguages").val(), // Send as a string
+        localLocation: $("#localLocation").val(),
+        githubLink: $("#githubLink").val(),
+        programNotes: $("#programNotes").val(),
+        tipsTricks: $("#tipsTricks").val(),
+        whatDone: $("#whatDone").val(),
+        whatToDo: $("#whatToDo").val(),
+        author: $("#author").val(),
+      };
+
+      console.log("Plan data to be sent:", planData);
+
+      // Send POST request to server
+      fetch(`${BASE_URL}/plans/addplan`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(planData),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            return response.text().then((text) => {
+              throw new Error(text);
+            }); // Fetch the full error message
+          }
+          return response.json(); // Parse JSON response
+        })
+        .then((data) => {
+          if (data.success) {
+            console.log("Success:", data);
+            alert("Plan created successfully!");
+
+            const newPlan = data.plan; // Access the newly created plan
+            const daysDifference = calculateDaysDifference(
+              newPlan.createdAt,
+              newPlan.updatedAt
+            ); // Calculate days difference using correct plan data
+
+            // Dynamically add the new plan to the table
+            $("#program-table tbody").append(`
+        <tr>
+          <td>${newPlan.id}</td>
+          <td>${newPlan.planName}</td>
+          <td>${new Date(newPlan.createdAt).toLocaleDateString()}</td>
+          <td>${
+            newPlan.updatedAt
+              ? new Date(newPlan.updatedAt).toLocaleDateString()
+              : "N/A"
+          }</td>
+          <td>${daysDifference}</td>
+          <td class="d-flex align-middle">
+            <button class="btn btn-primary me-4 show-details-btn" data-plan-id="${
+              plan.id
+            }"><i class="bi bi-book-half"></i>Show Details</button>
+            <button class="btn btn-secondary me-4 update-plan-btn" data-plan-id="${
+              plan.id
+            }"><i class="bi bi-pencil-square"></i>Update Plan</button>
+            <button class="btn btn-danger me-4 delete-plan-btn" data-plan-id="${
+              plan.id
+            }"><i class="bi bi-eraser-fill"></i>Delete Plan</button>
+          </td>
+        </tr>
+      `);
+
+            // Reset the form fields
+            $("#newPlanForm")[0].reset();
+          } else {
+            console.error("Server Error:", data.message);
+            alert(`Failed to create plan: ${data.message}`);
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          alert(`An error occurred: ${error.message}`);
+        });
+    });
+  });
+</script>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/header.ejs') %>
+  </head>
+  <body class="bg-with-bg-photo">
+    <%- include('./partials/navbar.ejs') %>
+
+    <!-- Main container -->
+    <div class="container mt-5 p-4">
+      <div class="row justify-content-center text-center">
+        <div class="col-md-8">
+          <h1 class="display-4 text-white"><%= title %></h1>
+          <p class="lead text-white">
+            This small app helps you manage and track your programs and projects
+            efficiently.
+          </p>
+          <hr class="my-4 border-white" />
+        </div>
+      </div>
+
+      <!-- Feature sections using Bootstrap cards -->
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm rounded-lg">
+            <div class="card-header bg-dark text-white">
+              <h4 class="my-0 fw-normal">Manage Plans</h4>
+            </div>
+            <div class="card-body text-center">
+              <p class="card-text">
+                Update, edit, or delete plans as your projects evolve over time.
+              </p>
+              <a href="/plans/showallplans" class="btn btn-warning btn-lg">
+                Manage Plans
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional information or call to action -->
+      <div class="row mt-4">
+        <div class="col text-center">
+          <p class="text-white">
+            Stay on top of your project management with our user-friendly
+            interface and robust features.
+          </p>
+          <a href="/help" class="btn btn-link text-white">
+            Learn more about how to use this app
+          </a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

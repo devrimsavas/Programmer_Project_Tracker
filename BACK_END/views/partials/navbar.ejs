@@ -1,0 +1,57 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <a class="navbar-brand" href="/">Program Planner</a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/plans/showallplans">All Plans</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/plans/addplan">New Page</a>
+        </li>
+      </ul>
+
+      <!-- User section on the right -->
+      <ul class="navbar-nav ms-auto">
+        <% if (user && user.role && user.role !== 'guest') { %>
+        <!-- If the user is authenticated (not a guest), show user info and logout -->
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            User:<span class="font-weight-bold"> <%= user.username %></span>
+            (<%= user.role %>)
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/auth/logout">Logout</a>
+        </li>
+        <% } else { %>
+        <!-- If the user is a guest, show login and sign-up options -->
+        <li class="nav-item">
+          <a class="nav-link" href="/auth/login">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/signup">Sign Up</a>
+        </li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</nav>
